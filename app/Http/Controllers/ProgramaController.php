@@ -14,7 +14,7 @@ class ProgramaController extends Controller
      */
     public function index()
     {
-        //
+        return view('programa.programa-index');
     }
 
     /**
@@ -24,7 +24,7 @@ class ProgramaController extends Controller
      */
     public function create()
     {
-        //
+        return view('programa.programa-form');
     }
 
     /**
@@ -46,7 +46,7 @@ class ProgramaController extends Controller
      */
     public function show(Programa $programa)
     {
-        //
+        return view('programa.programa-show');
     }
 
     /**
@@ -57,7 +57,7 @@ class ProgramaController extends Controller
      */
     public function edit(Programa $programa)
     {
-        //
+        return view('programa.programa-form');
     }
 
     /**
