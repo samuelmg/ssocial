@@ -14,7 +14,8 @@ class ProgramaController extends Controller
      */
     public function index()
     {
-        return view('programa.programa-index');
+        $programas = Programa::get();
+        return view('programa.programa-index', compact('programas'));
     }
 
     /**
@@ -35,7 +36,9 @@ class ProgramaController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        Programa::create($request->all());
+
+        return redirect()->route('programa.index');
     }
 
     /**
@@ -46,7 +49,7 @@ class ProgramaController extends Controller
      */
     public function show(Programa $programa)
     {
-        return view('programa.programa-show');
+        return view('programa.programa-show', compact('programa'));
     }
 
     /**
@@ -57,7 +60,7 @@ class ProgramaController extends Controller
      */
     public function edit(Programa $programa)
     {
-        return view('programa.programa-form');
+        return view('programa.programa-form', compact('programa'));
     }
 
     /**
@@ -69,7 +72,9 @@ class ProgramaController extends Controller
      */
     public function update(Request $request, Programa $programa)
     {
-        //
+        Programa::where('id', $programa->id)->update($request->except('_token', '_method'));
+
+        return redirect()->route('programa.show', $programa);
     }
 
     /**
@@ -80,6 +85,7 @@ class ProgramaController extends Controller
      */
     public function destroy(Programa $programa)
     {
-        //
+        $programa->delete();
+        return redirect()->route('programa.index');
     }
 }
