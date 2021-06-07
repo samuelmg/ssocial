@@ -13,6 +13,8 @@ class ProgramaController extends Controller
 
     public function __construct()
     {
+        $this->middleware('auth')->except('show');
+
         $this->rules = [
             'nombre' => ['required', 'string', 'min:5', 'max:255'],
             'titular' => ['required', 'string', 'min:5', 'max:255'],
