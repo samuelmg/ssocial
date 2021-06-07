@@ -4,9 +4,22 @@ namespace App\Http\Controllers;
 
 use App\Models\Programa;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class ProgramaController extends Controller
 {
+    private $rules;
+
+    public function __construct()
+    {
+        $this->rules = [
+            'nombre' => ['required', 'string', 'min:5', 'max:255'],
+            'titular' => ['required', 'string', 'min:5', 'max:255'],
+            'dependencia' => 'required|string|min:5|max:255',
+            'calendario' => 'required|string|min:4|max:6',
+        ];
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -36,6 +49,7 @@ class ProgramaController extends Controller
      */
     public function store(Request $request)
     {
+        $request->validate($this->rules + ['folio' => ['required', 'integer', 'unique:App\Models\Programa,folio']]);
         Programa::create($request->all());
 
         return redirect()->route('programa.index');
@@ -72,6 +86,12 @@ class ProgramaController extends Controller
      */
     public function update(Request $request, Programa $programa)
     {
+        $request->validate($this->rules + ['folio' => [
+            'required',
+            'integer',
+            Rule::unique('programas')->ignore($programa->id),
+        ]]);
+
         Programa::where('id', $programa->id)->update($request->except('_token', '_method'));
 
         return redirect()->route('programa.show', $programa);
