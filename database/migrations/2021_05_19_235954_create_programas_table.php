@@ -15,11 +15,11 @@ class CreateProgramasTable extends Migration
     {
         Schema::create('programas', function (Blueprint $table) {
             $table->id();
-            $table->string('calendario', 6);
-            $table->integer('folio');
             $table->string('nombre');
             $table->string('dependencia');
             $table->string('titular');
+            $table->string('calendario', 6);
+            $table->integer('folio');
             $table->timestamps();
         });
     }
