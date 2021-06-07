@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Programa;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
 
 class ProgramaController extends Controller
@@ -21,13 +22,14 @@ class ProgramaController extends Controller
     }
 
     /**
-     * Display a listing of the resource.
+     * Muestra el listado de programas del usuario logeado
      *
      * @return \Illuminate\Http\Response
      */
     public function index()
     {
-        $programas = Programa::get();
+        $programas = Auth::user()->programas;
+
         return view('programa.programa-index', compact('programas'));
     }
 
@@ -50,6 +52,7 @@ class ProgramaController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->rules + ['folio' => ['required', 'integer', 'unique:App\Models\Programa,folio']]);
+        $request->merge(['user_id' => Auth::id()]);
         Programa::create($request->all());
 
         return redirect()->route('programa.index');
