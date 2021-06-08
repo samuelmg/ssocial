@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Prestador;
 use App\Models\Programa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -68,7 +69,8 @@ class ProgramaController extends Controller
      */
     public function show(Programa $programa)
     {
-        return view('programa.programa-show', compact('programa'));
+        $prestadores = Prestador::get();
+        return view('programa.programa-show', compact('programa', 'prestadores'));
     }
 
     /**
@@ -112,5 +114,19 @@ class ProgramaController extends Controller
     {
         $programa->delete();
         return redirect()->route('programa.index');
+    }
+
+    /**
+     * Agregar un prestador a un programa
+     *
+     * @param  \Illuminate\Http\Request  $request
+     * @param  \App\Models\Programa  $programa
+     * @return \Illuminate\Http\Response
+     */
+    public function agregaPrestador(Request $request, Programa $programa)
+    {
+        $programa->prestadores()->sync($request->prestador_id);
+
+        return redirect()->route('programa.show', $programa);
     }
 }

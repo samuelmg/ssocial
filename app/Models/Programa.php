@@ -14,4 +14,9 @@ class Programa extends Model
     {
         return $this->belongsTo(User::class);
     }
+
+    public function prestadores()
+    {
+        return $this->belongsToMany(Prestador::class);
+    }
 }
