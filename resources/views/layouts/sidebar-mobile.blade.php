@@ -26,8 +26,10 @@ x-transition:leave-end="opacity-0 transform -translate-x-20"
         class="ml-6 text-lg font-bold text-gray-800 dark:text-gray-200"
         href="#"
     >
-        Windmill
+        S.Social
     </a>
+
+    @auth
     <ul class="mt-6">
         <li class="relative px-6 py-3">
         <!-- Active items have the snippet below -->
@@ -140,6 +142,8 @@ x-transition:leave-end="opacity-0 transform -translate-x-20"
         </template>
         </li>
     </ul>
+    @endauth
+
     @guest
         <div class="px-6 my-6">
             <a
