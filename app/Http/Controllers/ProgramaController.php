@@ -55,8 +55,15 @@ class ProgramaController extends Controller
     public function store(Request $request)
     {
         $request->validate($this->rules + ['folio' => ['required', 'integer', 'unique:App\Models\Programa,folio']]);
-        $request->merge(['user_id' => Auth::id()]);
-        Programa::create($request->all());
+
+        // Crear el programa haciendo merge para agregar user_id al $request
+        // $request->merge(['user_id' => Auth::id()]); // Agrega user_id a $request, como si lo hubieramos mandado en el formulario
+        // Programa::create($request->all()); //Crea Programa en la DB
+
+        // Crea el programa utilizando save()
+        $programa = new Programa($request->all()); // Crea una instancia en memoria de Programa
+        $user = Auth::user();                      // Obtiene la instancia del User. Equivalente a: $user = User::find(Auth::id());
+        $user->programas()->save($programa);       // Crea el registro en la DB del Programa.
 
         return redirect()->route('programa.index');
     }
