@@ -72,6 +72,27 @@
                 />
               </label>
 
+              <label class="block text-sm">
+                <span class="text-gray-700 dark:text-gray-400">Código de Alumno o Trabajador</span>
+                <input
+                  type="number"
+                  class="block w-full mt-1 text-sm dark:border-gray-600 dark:bg-gray-700 focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:text-gray-300 dark:focus:shadow-outline-gray form-input"
+                  id="codigo"
+                  name="codigo"
+                  value="{{ old('codigo') }}"
+                />
+              </label>
+
+              <div class="mt-2">
+                <label class="inline-flex items-center text-gray-600 dark:text-gray-400">
+                  <input type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="tipo" value="Empleado">
+                  <span class="ml-2">Empleado</span>
+                </label>
+                <label class="inline-flex items-center ml-6 text-gray-600 dark:text-gray-400">
+                  <input type="radio" class="text-purple-600 form-radio focus:border-purple-400 focus:outline-none focus:shadow-outline-purple dark:focus:shadow-outline-gray" name="tipo" value="Alumno">
+                  <span class="ml-2">Alumno</span>
+                </label>
+              </div>
 
               <label class="block mt-4 text-sm">
                 <span class="text-gray-700 dark:text-gray-400">{{ __('Password') }}</span>
