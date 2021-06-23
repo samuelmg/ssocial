@@ -15,4 +15,14 @@ class Prestador extends Model
     {
         return $this->belongsToMany(Programa::class);
     }
+
+    /**
+     * Get all of the comments for the Programa
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class);
+    }
 }

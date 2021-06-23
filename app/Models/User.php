@@ -63,4 +63,14 @@ class User extends Authenticatable implements MustVerifyEmail
     {
         return $this->hasMany(Programa::class);
     }
+
+    /**
+     * Get all of the comments for the Programa
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class);
+    }
 }

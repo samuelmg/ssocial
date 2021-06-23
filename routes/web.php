@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\AsistenciaController;
 use App\Http\Controllers\ProgramaController;
 use Illuminate\Foundation\Auth\EmailVerificationRequest;
 use Illuminate\Support\Facades\Route;
@@ -47,3 +48,8 @@ Route::middleware(['auth:sanctum', 'verified'])->get('/dashboard', function () {
 
 Route::post('programa/{programa}/agrega-prestador', [ProgramaController::class, 'agregaPrestador'])->name('programa.agrega-prestador');
 Route::resource('programa', ProgramaController::class)->middleware('verified');
+
+Route::get('asistencia/entrada', [AsistenciaController::class, 'formEntrada'])->name('asistencia.formEntrada');
+Route::post('asistencia/entrada', [AsistenciaController::class, 'registrarEntrada'])->name('asistencia.registrarEntrada');
+Route::get('asistencia/salida', [AsistenciaController::class, 'formSalida'])->name('asistencia.formSalida');
+Route::post('asistencia/salida/{asistencia}', [AsistenciaController::class, 'registrarSalida'])->name('asistencia.registrarSalida');

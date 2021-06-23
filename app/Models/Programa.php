@@ -19,4 +19,14 @@ class Programa extends Model
     {
         return $this->belongsToMany(Prestador::class);
     }
+
+    /**
+     * Get all of the comments for the Programa
+     *
+     * @return \Illuminate\Database\Eloquent\Relations\HasMany
+     */
+    public function asistencias()
+    {
+        return $this->hasMany(Asistencia::class);
+    }
 }
