@@ -31,7 +31,7 @@ class ProgramaController extends Controller
      */
     public function index()
     {
-        $programas = Auth::user()->programas;
+        $programas = Auth::user()->programas()->with('user:id,name')->get();
 
         return view('programa.programa-index', compact('programas'));
     }

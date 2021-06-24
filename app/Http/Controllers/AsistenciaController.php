@@ -119,7 +119,7 @@ class AsistenciaController extends Controller
     //Listado de asistencias con entrada sin salida
     public function formSalida()
     {
-        $asistencias = Asistencia::whereNull('salida')->get();
+        $asistencias = Asistencia::whereNull('salida')->with(['programa', 'prestador'])->get();
         return view('asistencias.salida-form', compact('asistencias'));
     }
 
