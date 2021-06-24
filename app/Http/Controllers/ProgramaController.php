@@ -7,6 +7,7 @@ use App\Models\Programa;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Validation\Rule;
+use Illuminate\Support\Facades\Gate;
 
 class ProgramaController extends Controller
 {
@@ -15,6 +16,7 @@ class ProgramaController extends Controller
     public function __construct()
     {
         $this->middleware('auth')->except('show');
+        //$this->authorizeResource(Programa::class, 'programa');
 
         $this->rules = [
             'nombre' => ['required', 'string', 'min:5', 'max:255'],
@@ -31,8 +33,8 @@ class ProgramaController extends Controller
      */
     public function index()
     {
-        $programas = Auth::user()->programas()->with('user:id,name')->get();
-
+        //$programas = Auth::user()->programas()->with('user:id,name')->get();
+        $programas = Programa::with('user:id,name')->get();
         return view('programa.programa-index', compact('programas'));
     }
 
@@ -43,6 +45,7 @@ class ProgramaController extends Controller
      */
     public function create()
     {
+        $this->authorize('create');
         return view('programa.programa-form');
     }
 
@@ -54,6 +57,8 @@ class ProgramaController extends Controller
      */
     public function store(Request $request)
     {
+        Gate::authorize('admin-programas');
+
         $request->validate($this->rules + ['folio' => ['required', 'integer', 'unique:App\Models\Programa,folio']]);
 
         // Crear el programa haciendo merge para agregar user_id al $request
@@ -88,6 +93,7 @@ class ProgramaController extends Controller
      */
     public function edit(Programa $programa)
     {
+        $this->authorize('update', $programa);
         return view('programa.programa-form', compact('programa'));
     }
 
@@ -100,6 +106,9 @@ class ProgramaController extends Controller
      */
     public function update(Request $request, Programa $programa)
     {
+        if ($request->user()->cannot('update', $programa)) {
+            abort(403);
+        }
         $request->validate($this->rules + ['folio' => [
             'required',
             'integer',

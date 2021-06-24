@@ -73,6 +73,7 @@
 
 </div>
 
+@can('delete', $programa)
     <form action="{{ route('programa.destroy', $programa) }}" method="POST">
         @csrf
         @method('DELETE')
@@ -89,5 +90,5 @@
             </button>
         </div>
     </form>
-
+@endcan
 @endsection

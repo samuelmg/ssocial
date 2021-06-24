@@ -2,8 +2,12 @@
 
 namespace App\Providers;
 
+use App\Models\User;
+use App\Models\Programa;
 use App\Models\Team;
+use App\Policies\ProgramaPolicy;
 use App\Policies\TeamPolicy;
+use Illuminate\Support\Facades\Gate;
 use Illuminate\Foundation\Support\Providers\AuthServiceProvider as ServiceProvider;
 
 class AuthServiceProvider extends ServiceProvider
@@ -15,6 +19,7 @@ class AuthServiceProvider extends ServiceProvider
      */
     protected $policies = [
         Team::class => TeamPolicy::class,
+        Progrma::class => ProgramaPolicy::class,
     ];
 
     /**
@@ -26,6 +31,8 @@ class AuthServiceProvider extends ServiceProvider
     {
         $this->registerPolicies();
 
-        //
+        Gate::define('admin-programas', function(User $user) {
+            return $user->tipo == 'Empleado';
+        });
     }
 }
